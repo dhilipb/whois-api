@@ -7,10 +7,15 @@ var whois = require('./whois');
 
 app.get('/api/', (req, res) => {
 
-  let domain = req.query.domain
+  const domain = req.query.domain
 
   whois.whois(domain, function (err, data) {
+    if(err) {
+      res.json(err);
+      return;
+    }
     res.json(data);
+
   });
 })
 
