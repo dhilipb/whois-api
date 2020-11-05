@@ -14,10 +14,15 @@ app.get("/api/", (req, res) => {
             return;
         }
 
+        const transformedData = {};
+        Object.entries(data).forEach(([key, value]) => {
+          transformedData[_.camelCase(key)] = _.trim(value);
+        })
+
         if (path) {
-          res.json(_.get(data, path));
+          res.send(_.get(transformedData, path));
         } else {
-          res.json(data);
+          res.json(transformedData);
         }
     });
 });
